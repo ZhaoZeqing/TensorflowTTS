@@ -222,8 +222,9 @@ class MelganTrainer(GanBasedTrainer):
 
         # calculate loss for each batch
         for eval_steps_per_epoch, batch in enumerate(
-            tqdm(self.eval_data_loader, desc="[eval]"), 1
+            self.eval_data_loader, 1
         ):
+
             # eval one step
             self._eval_step(batch)
 
@@ -389,6 +390,7 @@ def collater(
         hop_size (int): Hop size of auxiliary features.
 
     """
+
     if batch_max_steps is None:
         batch_max_steps = (tf.shape(audio)[0] // hop_size) * hop_size
 
@@ -518,9 +520,7 @@ def main():
 
     # get dataset
     if config["remove_short_samples"]:
-        mel_length_threshold = config["batch_max_steps"] // config[
-            "hop_size"
-        ] + 2 * config["generator_params"].get("aux_context_window", 0)
+        mel_length_threshold = config["batch_max_steps"] // config["hop_size"] + 2 * config["generator_params"].get("aux_context_window", 0)
     else:
         mel_length_threshold = None
 
@@ -543,7 +543,7 @@ def main():
     ).create(
         is_shuffle=config["is_shuffle"],
         map_fn=lambda a, b: collater(
-            a, b, batch_max_steps=tf.constant(config["batch_max_steps"], dtype=tf.int32)
+            a, b, batch_max_steps=tf.constant(config["batch_max_steps"], dtype=tf.int32), hop_size=tf.constant(config["hop_size"], dtype=tf.int32)
         ),
         allow_cache=config["allow_cache"],
         batch_size=config["batch_size"],
@@ -559,11 +559,7 @@ def main():
     ).create(
         is_shuffle=config["is_shuffle"],
         map_fn=lambda a, b: collater(
-            a,
-            b,
-            batch_max_steps=tf.constant(
-                config["batch_max_steps_valid"], dtype=tf.int32
-            ),
+            a, b, batch_max_steps=tf.constant(config["batch_max_steps_valid"], dtype=tf.int32), hop_size=tf.constant(config["hop_size"], dtype=tf.int32)
         ),
         allow_cache=config["allow_cache"],
         batch_size=config["batch_size"],

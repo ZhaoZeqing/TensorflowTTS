@@ -7,7 +7,7 @@
 ###########################################################
 #                FEATURE EXTRACTION SETTING               #
 ###########################################################
-sampling_rate: 22050     # Sampling rate of dataset.
+sampling_rate: 48000     # Sampling rate of dataset.
 hop_size: 256            # Hop size.
 format: "npy"
 
@@ -75,8 +75,8 @@ discriminator_optimizer_params:
 #                    INTERVAL SETTING                     #
 ###########################################################
 train_max_steps: 4000000                # Number of training steps.
-save_interval_steps: 10000               # Interval steps to save checkpoint.
-eval_interval_steps: 5000              # Interval steps to evaluate the network.
+save_interval_steps: 5               # 10000 Interval steps to save checkpoint.
+eval_interval_steps: 5              # 5000 Interval steps to evaluate the network.
 log_interval_steps: 200                # Interval steps to record the training log.
 
 ###########################################################

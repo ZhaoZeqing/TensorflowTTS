@@ -1,0 +1,1 @@
+CUDA_VISIBLE_DEVICES=7 python examples/multiband_melgan/train_multiband_melgan.py --train-dir ./dump/db4/train --dev-dir ./dump/db4/valid --outdir ./examples/multiband_melgan/exp/train.multiband_melgan.v1.db4 --config ./examples/multiband_melgan/conf/multiband_melgan.v1.yaml --use-norm 1 --generator_mixed_precision 1 --resume ""

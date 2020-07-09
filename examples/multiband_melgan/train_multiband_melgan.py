@@ -447,7 +447,7 @@ def main():
     ).create(
         is_shuffle=config["is_shuffle"],
         map_fn=lambda a, b: collater(
-            a, b, batch_max_steps=tf.constant(config["batch_max_steps"], dtype=tf.int32)
+            a, b, batch_max_steps=tf.constant(config["batch_max_steps"], dtype=tf.int32), hop_size=tf.constant(config["hop_size"], dtype=tf.int32)
         ),
         allow_cache=config["allow_cache"],
         batch_size=config["batch_size"],
@@ -463,11 +463,7 @@ def main():
     ).create(
         is_shuffle=config["is_shuffle"],
         map_fn=lambda a, b: collater(
-            a,
-            b,
-            batch_max_steps=tf.constant(
-                config["batch_max_steps_valid"], dtype=tf.int32
-            ),
+            a, b, batch_max_steps=tf.constant(config["batch_max_steps_valid"], dtype=tf.int32), hop_size=tf.constant(config["hop_size"], dtype=tf.int32)
         ),
         allow_cache=config["allow_cache"],
         batch_size=config["batch_size"],
